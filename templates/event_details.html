@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{{ event.name }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>{{ event.name }}</h1>
+    <p>{{ event.description }}</p>
+
+    <h2>Shows</h2>
+    <ul>
+        {% for show in shows %}
+        <li>{{ show.show_time }} - Seats: {{ show.booked_seats }}/{{ show.total_seats }}
+            <form action="/book_ticket/{{ show.id }}" method="post">
+                Name: <input type="text" name="customer_name" required>
+                Seats: <input type="number" name="seats" required>
+                <button type="submit">Book</button>
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <h2>Add Show</h2>
+    <form action="/add_show/{{ event.id }}" method="post">
+        Show Time: <input type="text" name="show_time" required>
+        Total Seats: <input type="number" name="total_seats" required>
+        <button type="submit">Add Show</button>
+    </form>
+</body>
+</html>

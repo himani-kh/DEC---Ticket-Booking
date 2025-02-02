@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Events - Ticket Booking</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav>
+        <h2>Ticket Booking System</h2>
+        <div>
+            <a href="/">Home</a>
+            <a href="/summary">Summary</a>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <h3>Events</h3>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+            {% for event in events %}
+            <tr>
+                <td>{{ event.name }}</td>
+                <td>{{ event.description }}</td>
+                <td>
+                    <a href="{{ url_for('event_details', event_id=event.id) }}">View Shows</a>
+                    <form action="/delete_event/{{ event.id }}" method="post" style="display:inline;">
+                        <button type="submit">Delete</button>
+                    </form>
+                    <form action="/update_event/{{ event.id }}" method="post" class="form-inline">
+                        <input type="text" name="name" placeholder="New Name" required>
+                        <input type="text" name="description" placeholder="New Description" required>
+                        <button type="submit">Update</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        
+        <h4>Add New Event</h4>
+        <form action="/add_event" method="post" class="form-inline">
+            <input type="text" name="name" placeholder="Event Name" required>
+            <input type="text" name="description" placeholder="Description" required>
+            <button type="submit">Add Event</button>
+        </form>
+    </div>
+</body>
+</html>
